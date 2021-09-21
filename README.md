@@ -2,12 +2,14 @@
 
 ## Project Name
 
-3D-Carousel
+circle-approximate
+
+## Desc
+
+円 n~16までの近似DEMO
 ## project start
 
 `$ yarn start`
-
-`$ yarn build`
 
 ## enviroment
 
@@ -15,14 +17,14 @@
 $ node -v
 v14.4.0
 
-webpack5
-
 TypeScript
 
 sass
+
+webpack5
 
 ```
 
 ## Demo
 
-
+![demo](assets/demo.png)
