@@ -6,7 +6,7 @@ module.exports = {
   mode: MODE,
   entry: './src/index.ts',
   output: {
-    path: `${__dirname}/dist`,
+    path: `${__dirname}/public`,
     filename: 'main.js',
   },
   module: {

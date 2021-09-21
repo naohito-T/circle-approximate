@@ -1,43 +1,60 @@
 import './sass/style.scss';
-import * as THREE from 'three';
 
 window.addEventListener('DOMContentLoaded', () => {
-  // レンダラーを作成
-  const renderer = new THREE.WebGLRenderer();
-  // レンダラーのサイズを設定(デフォルトではレンダラーのサイズが小さいためsetSizeで設定する)
-  renderer.setSize(800, 600);
-  // canvasをbodyに追加
-  document.body.appendChild(renderer.domElement);
+  const apothem = 100,
+    n = 16, // 3, 4, ...n
+    polys = document.querySelector('.regular-polygons');
 
-  // シーンを作成
-  const scene = new THREE.Scene();
+  const drawFigure = (apothem: number, n: number) => {
+    const pi_over_n = Math.PI / n,
+      theta = 2 * pi_over_n,
+      circumradius = apothem / Math.cos(pi_over_n),
+      cx = circumradius,
+      cy = circumradius,
+      figureSize = 2 * circumradius,
+      ns = 'http://www.w3.org/2000/svg';
+    const figure = document.createElement('figure');
 
-  // カメラを作成
-  const camera = new THREE.PerspectiveCamera(45, 800 / 600, 1, 10000);
-  camera.position.set(0, 0, 1000);
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('width', figureSize + 'px');
+    svg.setAttribute('height', figureSize + 'px');
 
-  // 箱を作成
-  const geometry = new THREE.BoxGeometry(250, 250, 250);
-  const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-  const box = new THREE.Mesh(geometry, material);
-  box.position.z = -5;
-  scene.add(box);
+    const polygon = document.createElementNS(ns, 'polygon');
+    polygon.classList.add('polygon');
 
-  // 平行光源を生成
-  const light = new THREE.DirectionalLight(0xffffff);
-  light.position.set(1, 1, 1);
-  scene.add(light);
+    let p, angle;
+    for (var i = 0; i < n; i++) {
+      angle = i * theta - Math.PI / 2 - theta / 2;
 
-  const tick = (): void => {
-    requestAnimationFrame(tick);
+      p = svg.createSVGPoint();
 
-    box.rotation.x += 0.05;
-    box.rotation.y += 0.05;
+      p.x = cx + circumradius * Math.cos(angle);
+      p.y = cy - circumradius * Math.sin(angle);
 
-    // 描画
-    renderer.render(scene, camera);
+      polygon.points.appendItem(p);
+    }
+
+    svg.appendChild(polygon);
+
+    var circle = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'circle'
+    );
+    circle.classList.add('inscribed-circle');
+    circle.setAttribute('cx', cx + 'px');
+    circle.setAttribute('cy', cy + 'px');
+    circle.setAttribute('r', apothem + 'px');
+    svg.appendChild(circle);
+    figure.appendChild(svg);
+
+    var caption = document.createElement('figcaption');
+    caption.innerHTML = 'n = ' + n;
+    figure.appendChild(caption);
+
+    polys?.appendChild(figure);
   };
-  tick();
 
-  console.log('Hello Three.js');
+  for (var sides = 3; sides <= n; ++sides) {
+    drawFigure(apothem, sides);
+  }
 });
