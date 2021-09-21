@@ -1,3 +1,4 @@
+import './sass/style.scss';
 import * as THREE from 'three';
 
 window.addEventListener('DOMContentLoaded', () => {

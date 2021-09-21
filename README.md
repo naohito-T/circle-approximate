@@ -2,15 +2,12 @@
 
 ## Project Name
 
-Three.js StartUp Kitです。
-## About
-
-Three.js in typescript, module in webpack5
-Three.js を TypeScriptで moduleはwebpack5で構築されています。
-
+3D-Carousel
 ## project start
 
-`$ npm run build`
+`$ yarn start`
+
+`$ yarn build`
 
 ## enviroment
 
@@ -22,10 +19,10 @@ webpack5
 
 TypeScript
 
-Three.js
+sass
 
 ```
 
 ## Demo
 
-デモとして立方体が回るのが作成されています。
+
